@@ -1,3 +1,30 @@
-# This template is low-dependency. 
-# By default there is no requirements added here.
-# Add the requirements you need to this file.
+requests
+selenium
+elasticsearch
+bertopic
+dataset>=1.6.2
+evaluate>=0.4.2
+matplotlib>=3.7.1
+Pillow>=9.5.0
+scikit_learn>=1.2.2
+seaborn>=0.13.2
+sentence_transformers>=2.7.0
+spacy>=3.6.1
+summac>=0.0.4
+torch>=1.12.0
+tqdm>=4.65.0
+transformers>=4.35.2
+dowhy>=0.11.1
+graphviz>=0.20.1
+git+https://github.com/UKPLab/intertext-graph.git==0.5.1
+langchain_community>=0.2.12
+langchain_core>=0.2.30
+langchain_huggingface>=0.0.3
+langchain_openai>=0.1.21
+networkx>=3.1
+nltk>=3.8.1
+numpy>=1.24.3
+openai>=1.40.6
+pandas>=2.0.2
+pyvis>=0.3.2
+tiktoken>=0.7.0

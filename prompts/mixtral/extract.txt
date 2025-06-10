@@ -1,0 +1,16 @@
+<s>
+[INST]
+You are a biomedical researcher assessing the quality of a research article. The research article text:
+
+{parents}
+
+Based on the article text, answer the following question:
+{task}
+More specifically, this means: {description}
+
+Keep your answer concise. Return the answer as a JSON object in the following format:
+{format}
+
+Here's an example output for the given question:
+"{example}".
+[/INST]

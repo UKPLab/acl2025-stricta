@@ -1,116 +1,211 @@
 <p  align="center">
-  <img src='logo.png' width='200'>
+  <img src='logo.png' width='500'>
 </p>
 
-# acl2025_stricta
-[![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
+# STRICTA: Structure Reasoning in Critical Text Asssessment
+
+[![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2409.05367)
 [![License](https://img.shields.io/github/license/UKPLab/acl2025-stricta)](https://opensource.org/licenses/Apache-2.0)
 [![Python Versions](https://img.shields.io/badge/Python-3.9-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/UKPLab/acl2025-stricta/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/acl2025-stricta/actions/workflows/main.yml)
 
-This is the official template for new Python projects at UKP Lab. It was adapted for the needs of UKP Lab from the excellent [python-project-template](https://github.com/rochacbruno/python-project-template/) by [rochacbruno](https://github.com/rochacbruno).
+> **Abstract:** Critical text assessment is at the core of many expert activities, such as fact-checking, peer review,
+> and essay grading. Yet, existing work treats critical text assessment as a black box problem, limiting interpretability
+> and human-AI collaboration. To close this gap, we introduce Structured Reasoning In Critical Text Assessment (STRICTA),
+> a novel specification framework to model text assessment as an explicit, step-wise reasoning process. STRICTA breaks
+> down the assessment into a graph of interconnected reasoning steps drawing on causality theory (Pearl, 1995). This graph
+> is populated based on expert interaction data and used to study the assessment process and facilitate human-AI
+> collaboration. We formally define STRICTA and apply it in a study on biomedical paper assessment, resulting in a dataset
+> of over 4000 reasoning steps from roughly 40 biomedical experts on more than 20 papers. We use this dataset to
+> empiricallystudy expert reasoning in critical text assessment, and investigate if LLMs are able to imitate and support
+> experts within these workflows. The resulting tools and datasets pave the way for studying collaborative expert-AI
+> reasoning in text assessment, in peer review and beyond.
+> Contact
+> person: [Nils Dycke](https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp)
 
-It should help you start your project and give you continuous status updates on the development through [GitHub Actions](https://docs.github.com/en/actions).
+[UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/)
 
-> **Abstract:** The study of natural language processing (NLP) has gained increasing importance in recent years, with applications ranging from machine translation to sentiment analysis. Properly managing Python projects in this domain is of paramount importance to ensure reproducibility and facilitate collaboration. The template provides a structured starting point for projects and offers continuous status updates on development through GitHub Actions. Key features include a basic setup.py file for installation, packaging, and distribution, documentation structure using mkdocs, testing structure using pytest, code linting with pylint, and entry points for executing the program with basic CLI argument parsing. Additionally, the template incorporates continuous integration using GitHub Actions with jobs to check, lint, and test the project, ensuring robustness and reliability throughout the development process.
-
-Contact person: [Federico Tiblias](mailto:federico.tiblias@tu-darmstadt.de) 
-
-[UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
-)
-
-Don't hesitate to send us an e-mail or report an issue, if something is broken (and it shouldn't be) or if you have further questions.
-
+Don't hesitate to send us an e-mail or report an issue, if something is broken (and it shouldn't be) or if you have
+further questions.
 
 ## Getting Started
 
-> **DO NOT CLONE OR FORK**
+### Quickstart
 
-If you want to set up this template:
+1. Install the package
 
-1. Request a repository on UKP Lab's GitHub by following the standard procedure on the wiki. It will install the template directly. Alternatively, set it up in your personal GitHub account by clicking **[Use this template](https://github.com/rochacbruno/python-project-template/generate)**.
-2. Wait until the first run of CI finishes. Github Actions will commit to your new repo with a "✅ Ready to clone and code" message.
-3. Delete optional files: 
-    - If you don't need automatic documentation generation, you can delete folder `docs`, file `.github\workflows\docs.yml` and `mkdocs.yml`
-    - If you don't want automatic testing, you can delete folder `tests` and file `.github\workflows\tests.yml`
-    - If you do not wish to have a project page, delete folder `static` and files `.nojekyll`, `index.html`
-4. Prepare a virtual environment:
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install .
-pip install -r requirements-dev.txt # Only needed for development
 ```
-5. Adapt anything else (for example this file) to your project. 
+pip install git+https://github.com/UKPLab/acl2025-stricta
+```
 
-6. Read the file [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md)  for more information about development.
+2. Download Dataset
+
+Download the data from [tudatalib](https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/4614); you need to request
+access and will receive a personalized link for download. Unpack the dataset into a directory `./data`
+
 
 ## Usage
 
-### Using the classes
 
-To import classes/methods of `acl2025_stricta` from inside the package itself you can use relative imports: 
+### Checkout the Dataset
 
-```py
-from .base import BaseClass # Notice how I omit the package name
+Load the STRICTA workflow and data for biomedical paper assessment:
 
-BaseClass().something()
+```python
+from acl2025_stricta.base import load, load_itemwise_dataset
+
+# for data inspection
+workflow_main, papers_main, annotations_main = load("./data/annotations_language_corrected/main_study")
+workflow_students, papers_students, annotations_students = load("./data/annotations_language_corrected/student_seminar")
+
+workflow = workflow_main
+papers = {**{f"main_{k}" for k,v in papers_main.items()}, **{f"students_{k}" for k,v in papers_students.items()}}
+annotations = {**{f"main_{k}" for k,v in annotations_main.items()}, **{f"students_{k}" for k,v in annotations_students.items()}}
+
+# for running experiments
+itemwise_workflow, itemwise_papers, itemwise_annotations = load_itemwise_dataset([
+    "./data/annotations_language_corrected/main_study",
+    "./data/annotations_language_corrected/student_seminar"
+    ]
+)
 ```
 
-To import classes/methods from outside the package (e.g. when you want to use the package in some other project) you can instead refer to the package name:
+### Inspect the workflow
 
-```py
-from acl2025_stricta import BaseClass # Notice how I omit the file name
-from acl2025_stricta.subpackage import SubPackageClass # Here it's necessary because it's a subpackage
+Run following code based on the loaded workflow and annotations; check out the result produced under `./visualizations`.
 
-BaseClass().something()
-SubPackageClass().something()
+```python
+from acl2025_stricta.base import WorkflowVisualization
+import os
+
+os.mkdirs("./visualizations", exist_ok=True)
+vis = WorkflowVisualization(workflow, annotations, "./visualizations")
+
+vis.show_graphviz()
 ```
 
-### Using scripts
+### Iterate the data
+
+```python
+for paper_id in papers:
+    paper = papers[paper_id]
+    annotated_workflow = annotations[paper_id]
+
+    for aid, exec in annotated_workflow.items():
+        print(f"Paper: {paper_id}, Annotation ID: {aid}")
+        for wi in workflow:
+            if wi in exec:
+                print(f"  Step: {wi}, Content: {exec[wi]}")
+            else:
+                print(f"  Step: {wi} not executed")
+```
+
+### Running workflow with LLMs
+
+Instantiate using an LLM of your choice:
+
+```python
+# e.g. llama-3
+from acl2025_stricta.moels import LlamaWorkflow
+from acl2025_stricta.eval import predict_itemwise, store_predictions
+
+local_model_path = "<path to local model weights>"
+model_subpath = "depends on the number of params etc. e.g. '8B-Instruct'"
+with open("./prompts/llama3/extract.txt", "r") as f:
+    exprompt = f.read().strip()
+with open("./prompts/llama3/infer.txt", "r") as f:
+    infprompt = f.read().strip()
+
+llama3 = LlamaWorkflow(workflow,
+                       "llama-3",
+                       model_path=local_model_path,
+                       model_subpath=model_subpath,
+                       compress_paper=True) # discards references of paper to reduce context usage
+llama3.set_instructions(exprompt, "extract")
+llama3.set_instructions(infprompt, "infer")
+
+os.mkdir("./results", exist_ok=True)
+predictions = predict_itemwise(
+    workflow=itemwise_workflow,
+    papers=itemwise_papers,
+    annotations=itemwise_annotations,
+    model=llama3,
+    _cache_dir="./results"
+)
+
+store_predictions(predictions, "./results/predictions.csv")
+```
+
+### SCM 
+You can fit the SCM and run analysis:
+
+```python
+from acl2025_stricta.eval import fit_boolean_scm
+
+scm = fit_boolean_scm(
+    dataset_paths=[
+        "./data/raw/main_study",
+        "./data/raw/student_seminar"
+    ],
+)
+
+average_treatment_effect = average_treatment_effect(
+    scm = scm,
+    intervention=dict(step004_8=lambda x: True),
+    not_intervention=dict(step004_8=lambda x:False)
+)
+
+print(f"Averaged treatment effect of step004_8: {average_treatment_effect}")
+
+some_factual = annotations["main_paper_2"][4]
+
+counterfactual = counterfactual(
+    scm=scm,
+    sample = some_factual,
+    intervention = dict(step004_8=lambda x: False)
+)
+print(f"Counterfactual on step004_8 for final node: {counterfactual}")
+```
+
+### CLI for paper experiments
 
 This is how you can use `acl2025_stricta` from command line:
 
 ```bash
-$ python -m acl2025_stricta
+MODEL_PATH="<dataset_path to your local model weights>"
+MODEL_SUBPATH="8b-Instruct"
+
+
+$ python -m acl2025_stricta --dataset_path "./data/annotations_language_corrected" \
+    --experiment predict \
+    --model-name llama-3 
+    
+$ python -m acl2025_stricta --dataset_path "./data/annotations_language_corrected" \
+--experiment eval \
+--model-name llama-3 
 ```
 
-### Expected results
+In the `./results` directory you will find the predictions in `predictions.csv` for the selected model plus
+an eval directory for the model with the scores for the predictions.
 
-After running the experiments, you should expect the following results:
-
-(Feel free to describe your expected results here...)
-
-### Parameter description
-
-* `x, --xxxx`: This parameter does something nice
-
-* ...
-
-* `z, --zzzz`: This parameter does something even nicer
-
-## Development
-
-Read the FAQs in [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md) to learn more about how this template works and where you should put your classes & methods. Make sure you've correctly installed `requirements-dev.txt` dependencies
 
 ## Cite
 
 Please use the following citation:
 
 ```
-@InProceedings{smith:20xx:CONFERENCE_TITLE,
-  author    = {Smith, John},
-  title     = {My Paper Title},
-  booktitle = {Proceedings of the 20XX Conference on XXXX},
-  month     = mmm,
-  year      = {20xx},
-  address   = {Gotham City, USA},
-  publisher = {Association for XXX},
-  pages     = {XXXX--XXXX},
-  url       = {http://xxxx.xxx}
+@misc{dycke2025strictastructuredreasoningcritical,
+      title={STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond}, 
+      author={Nils Dycke and Matej Zečević and Ilia Kuznetsov and Beatrix Suess and Kristian Kersting and Iryna Gurevych},
+      year={2025},
+      eprint={2409.05367},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2409.05367}, 
 }
 ```
 
 ## Disclaimer
 
-> This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication. 
+> This repository contains experimental software and is published for the sole purpose of giving additional background
+> details on the respective publication.

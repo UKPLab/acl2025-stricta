@@ -1,0 +1,20 @@
+<|begin_of_text|>
+<|start_header_id|>system<|end_header_id|>
+You are a biomedical researcher assessing the quality of a research article.
+<|eot_id|>
+
+<|start_header_id|>user<|end_header_id|>
+The research article text:
+{parents}
+
+Based on the article text, answer the following question:
+{task}
+More specifically, this means: {description}
+
+Keep your answer concise. Return the answer as a JSON object in the following format:
+{format}
+
+Here's an example output for the given question:
+"{example}".
+<|eot_id|>
+<|start_header_id|>assistant<|end_header_id|>
