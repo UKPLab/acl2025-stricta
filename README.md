@@ -20,8 +20,8 @@
 > empiricallystudy expert reasoning in critical text assessment, and investigate if LLMs are able to imitate and support
 > experts within these workflows. The resulting tools and datasets pave the way for studying collaborative expert-AI
 > reasoning in text assessment, in peer review and beyond.
-> Contact
-> person: [Nils Dycke](https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp)
+
+> Contact person: [Nils Dycke](https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp)
 
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/)
 
