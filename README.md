@@ -43,6 +43,32 @@ pip install git+https://github.com/UKPLab/acl2025-stricta
 Download the data from [tudatalib](https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/4614); you need to request
 access and will receive a personalized link for download. Unpack the dataset into a directory `./data`
 
+## Dataset Structure
+
+The downloaded dataset follows the below structure. We provide easy methods for loading the dataset. Decide up-front
+if you want to use the raw data or the annotations with language error correction (typos, capitalization, ...). Then
+pass one of the two directories to the loading functions below.
+
+```
+raw                                             # the raw data incl. annotations and papers
+├── main_study
+│   ├── paper_{x}
+│   │   ├── media
+│   │   ├── paper.itg.json
+│   │   ├── annotations_in_out.json
+│   │   └── ...
+│   └── ...
+├── student_seminar
+│   ├── ...
+│   └── ...
+
+annotations_language_corrected                  # the annotations with language error correction (typos, capitalization, ...)
+├── main_study
+│   └── ...
+├── student_seminar
+│   └── ...
+
+```
 
 ## Usage
 

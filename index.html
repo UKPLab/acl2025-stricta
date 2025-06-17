@@ -51,18 +51,21 @@
         <div class="container is-max-desktop">
             <div class="columns is-centered">
                 <div class="column has-text-centered">
-                    <h1 class="title is-1 publication-title">STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond</h1>
+                    <h1 class="title is-1 publication-title">STRICTA: Structured Reasoning in Critical Text Assessment
+                        for Peer Review and Beyond</h1>
                     <div class="is-size-5 publication-authors">
                         <!-- Paper authors -->
                         <span class="author-block">
-                <a href="https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp" target="_blank">Nils Dycke</a><sup>1</sup>,</span>
+                <a href="https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp"
+                   target="_blank">Nils Dycke</a><sup>1</sup>,</span>
                         <span class="author-block">
                   <a href="https://matej-zecevic.de/" target="_blank">Matej Zečević</a><sup>2</sup>,</span>
                         <span class="author-block">
                     <a href="https://iokuznetsov.github.io/" target="_blank"> Ilia Kuznetsov<sup>1</sup></a>
                   </span>
                         <span class="author-block">
-                    <a href="https://www.tu-darmstadt.de/synbio/synbio/mitglieder_1/mitglieder_details_100224.de.jsp" target="_blank">Beatrix Suess<sup>3</sup></a>
+                    <a href="https://www.tu-darmstadt.de/synbio/synbio/mitglieder_1/mitglieder_details_100224.de.jsp"
+                       target="_blank">Beatrix Suess<sup>3</sup></a>
                   </span>
                         <span class="author-block">
                     <a href="https://ml-research.github.io/" target="_blank">Kristian Kersting<sup>2</sup></a>
@@ -93,7 +96,7 @@
                         <span>Paper</span>
                       </a>
                     </span>
-                  </span>
+                            </span>
 
                             <!-- Github link -->
                             <span class="link-block">
@@ -108,7 +111,7 @@
 
                             <!-- ArXiv abstract Link -->
                             <span class="link-block">
-                  <a href="https://arxiv.org/pdf/2409.05367" target="_blank"
+                  <a href="https://arxiv.org/abs/2409.05367v2" target="_blank"
                      class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
@@ -124,24 +127,23 @@
     </div>
 </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
-    <div class="container is-max-desktop">
-        <div class="hero-body">
-            <div>
-                TBA: Figure 1
+<section class="hero is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="is-centered has-text-centered">
+                <!-- Your image here TODO-->
+                <img src="static/images/contributions.png" alt="contributions" style="width:80%"/>
+                <h2 class="subtitle has-text-centered">
+                    Opening up the black box of reasoning during critical text assessment
+                    tasks including peer review. With STRICTA and its accompanying dataset we lay the groundwork towards
+                    novel human-LLM collaboration paradigms on expert tasks and towards a new path of causal reasoning
+                    with LLMs.
+                </h2>
             </div>
-            <!-- Add figure 1-->
-            <h2 class="subtitle has-text-centered">
-                Opening up the black box of reasoning during critical text assessment tasks including peer review. With
-                STRICTA and its accompanying dataset we lay the groundwork towards novel human-LLM collaboration
-                paradigms.
-            </h2>
         </div>
     </div>
 </section>
-<!-- End teaser video -->
+
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
@@ -151,17 +153,27 @@
                 <h2 class="title is-3">Abstract</h2>
                 <div class="content has-text-justified">
                     <p>
-                        Critical text assessment is at the core of many expert activities, such as fact-checking, peer review,
- and essay grading. Yet, existing work treats critical text assessment as a black box problem, limiting interpretability
-and human-AI collaboration. To close this gap, we introduce Structured Reasoning In Critical Text Assessment (STRICTA),
- a novel specification framework to model text assessment as an explicit, step-wise reasoning process. STRICTA breaks
- down the assessment into a graph of interconnected reasoning steps drawing on causality theory (Pearl, 1995). This graph
- is populated based on expert interaction data and used to study the assessment process and facilitate human-AI
-collaboration. We formally define STRICTA and apply it in a study on biomedical paper assessment, resulting in a dataset
- of over 4000 reasoning steps from roughly 40 biomedical experts on more than 20 papers. We use this dataset to
-empiricallystudy expert reasoning in critical text assessment, and investigate if LLMs are able to imitate and support
-experts within these workflows. The resulting tools and datasets pave the way for studying collaborative expert-AI
-reasoning in text assessment, in peer review and beyond.
+                        Critical text assessment is at the core of many expert activities, such as fact-checking, peer
+                        review,
+                        and essay grading. Yet, existing work treats critical text assessment as a black box problem,
+                        limiting interpretability
+                        and human-AI collaboration. To close this gap, we introduce Structured Reasoning In Critical
+                        Text Assessment (STRICTA),
+                        a novel specification framework to model text assessment as an explicit, step-wise reasoning
+                        process. STRICTA breaks
+                        down the assessment into a graph of interconnected reasoning steps drawing on causality theory
+                        (Pearl, 1995). This graph
+                        is populated based on expert interaction data and used to study the assessment process and
+                        facilitate human-AI
+                        collaboration. We formally define STRICTA and apply it in a study on biomedical paper
+                        assessment, resulting in a dataset
+                        of over 4000 reasoning steps from roughly 40 biomedical experts on more than 20 papers. We use
+                        this dataset to
+                        empiricallystudy expert reasoning in critical text assessment, and investigate if LLMs are able
+                        to imitate and support
+                        experts within these workflows. The resulting tools and datasets pave the way for studying
+                        collaborative expert-AI
+                        reasoning in text assessment, in peer review and beyond.
                     </p>
                 </div>
             </div>
@@ -176,32 +188,36 @@ reasoning in text assessment, in peer review and beyond.
     <div class="hero-body">
         <div class="container">
             <div id="results-carousel" class="carousel results-carousel">
-                <div class="item">
-                    <!-- Your image here TODO-->
-                    <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
+                <div class="item has-text-centered">
+                    <img src="static/images/figure1.png" alt="Idea of STRICTA"/>
                     <h2 class="subtitle has-text-centered">
-                        First image description.
+                        We model critical text assessment as a structured reasoning process, where we connect
+                        individual reasoning steps inside a causal graph from the input text to the final verdict.
                     </h2>
                 </div>
-                <div class="item">
-                    <!-- Your image here TODO-->
-                    <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
+                <div class="item has-text-centered">
+                    <img src="static/images/scm.png" alt="Causal model"/>
                     <h2 class="subtitle has-text-centered">
-                        Second image description.
+                        By modeling the reasoning process as a structural causal model, we can investigate the weight
+                        of different factors during assessment and investigate counterfactual queries. We explicitly
+                        account for subjectivity and multiple perspectives through the background variables.
                     </h2>
                 </div>
-                <div class="item">
-                    <!-- Your image here TODO-->
-                    <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
+                <div class="item has-text-centered">
+                    <img src="static/images/workflow.png" alt="Biomedical Paper Assessment Workflow"/>
                     <h2 class="subtitle has-text-centered">
-                        Third image description.
+                        We test STRICTA on a dataset of over 4000 reasoning steps from 40 biomedical experts during
+                        paper assessment in that domain. We derive a workflow of 45 items through expert interviews
+                        and collect a dataset asking the professionals to reason explicitly about the paper.
                     </h2>
                 </div>
-                <div class="item">
-                    <!-- Your image here TODO-->
-                    <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
+                <div class="item has-text-centered">
+                    <img src="static/images/llm_prog.png" alt="LLM experiments"/>
                     <h2 class="subtitle has-text-centered">
-                        Fourth image description.
+                        The data collected within STRICTA allows to pose various challenging reasoning tasks. We investigate
+                        an abductive reasoning task where LLMs need to explain a human's judgement post-hoc. We run LLMs
+                        as a program following the structure of the SCM and find that they can imitate human reasoning
+                        for certain steps but weight factors very differently.
                     </h2>
                 </div>
             </div>
@@ -211,60 +227,22 @@ reasoning in text assessment, in peer review and beyond.
 <!-- End image carousel -->
 
 
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-    <div class="hero-body">
-        <div class="container">
-            <!-- Paper video. -->
-            <h2 class="title is-3">Video Presentation</h2>
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-
-                    <div class="publication-video">
-                        <!-- Youtube embed code here -->
-                        <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0"
-                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
+<!-- Presentation video -->
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <video poster="" id="tree" autoplay controls muted loop height="100%">
+                <!-- Your video here -->
+                <source src="static/videos/stricta_presentation.mp4"
+                        type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">
+                Presentation of STRICTA at ACL25 (10min).
+            </h2>
         </div>
     </div>
 </section>
-<!-- End youtube video -->
-
-
-<!-- Video carousel -->
-<section class="hero is-small">
-    <div class="hero-body">
-        <div class="container">
-            <h2 class="title is-3">Another Carousel</h2>
-            <div id="results-carousel" class="carousel results-carousel">
-                <div class="item item-video1">
-                    <video poster="" id="video1" autoplay controls muted loop height="100%">
-                        <!-- Your video file here -->
-                        <source src="static/videos/carousel1.mp4"
-                                type="video/mp4">
-                    </video>
-                </div>
-                <div class="item item-video2">
-                    <video poster="" id="video2" autoplay controls muted loop height="100%">
-                        <!-- Your video file here -->
-                        <source src="static/videos/carousel2.mp4"
-                                type="video/mp4">
-                    </video>
-                </div>
-                <div class="item item-video3">
-                    <video poster="" id="video3" autoplay controls muted loop height="100%">\
-                        <!-- Your video file here -->
-                        <source src="static/videos/carousel3.mp4"
-                                type="video/mp4">
-                    </video>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End video carousel -->
+<!-- Presentation video -->
 
 
 <!-- Paper poster -->
@@ -273,7 +251,7 @@ reasoning in text assessment, in peer review and beyond.
         <div class="container">
             <h2 class="title">Poster</h2>
 
-            <iframe src="static/pdfs/sample.pdf" width="100%" height="550">
+            <iframe src="static/pdfs/poster.pdf" width="100%" height="550">
             </iframe>
 
         </div>
@@ -286,7 +264,17 @@ reasoning in text assessment, in peer review and beyond.
 <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
-        <pre><code>BibTex Code Here</code></pre>
+        <pre><code>
+@misc{dycke2025stricta,
+      title={STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond},
+      author={Nils Dycke and Matej Zečević and Ilia Kuznetsov and Beatrix Suess and Kristian Kersting and Iryna Gurevych},
+      year={2025},
+      eprint={2409.05367},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2409.05367},
+}
+        </code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
