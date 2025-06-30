@@ -21,6 +21,9 @@
 > experts within these workflows. The resulting tools and datasets pave the way for studying collaborative expert-AI
 > reasoning in text assessment, in peer review and beyond.
 
+You can find the experimental code for the average causal effect estimation and counterfactual analysis, as well as 
+the LLM experiments for biomedical paper assessment in this repository.
+
 > Contact person: [Nils Dycke](https://www.informatik.tu-darmstadt.de/ukp/ukp_home/staff_ukp/ukp_home_content_staff_1_details_109248.en.jsp)
 
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/)
@@ -47,28 +50,8 @@ access and will receive a personalized link for download. Unpack the dataset int
 
 The downloaded dataset follows the below structure. We provide easy methods for loading the dataset. Decide up-front
 if you want to use the raw data or the annotations with language error correction (typos, capitalization, ...). Then
-pass one of the two directories to the loading functions below.
-
-```
-raw                                             # the raw data incl. annotations and papers
-├── main_study
-│   ├── paper_{x}
-│   │   ├── media
-│   │   ├── paper.itg.json
-│   │   ├── annotations_in_out.json
-│   │   └── ...
-│   └── ...
-├── student_seminar
-│   ├── ...
-│   └── ...
-
-annotations_language_corrected                  # the annotations with language error correction (typos, capitalization, ...)
-├── main_study
-│   └── ...
-├── student_seminar
-│   └── ...
-
-```
+pass one of the two directories to the loading functions below. Check out the README.md in the `data` directory for
+more details on the dataset structure.
 
 ## Usage
 

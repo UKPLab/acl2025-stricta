@@ -1,0 +1,621 @@
+{
+  "steps": [
+    {
+      "id": "step001_42",
+      "name": "Skim",
+      "action": "read",
+      "check": null,
+      "prompt": "Skim the whole paper briefly (10-15min).",
+      "example": "-",
+      "description": "Get the gist of the paper in a 10-15min read. No need to understand all details, but get a rough idea what the paper is about.",
+      "action_params": {}
+    },
+    {
+      "id": "step002_44",
+      "name": "High-level Idea",
+      "action": "extract",
+      "check": null,
+      "prompt": "Summarize the high-level idea of the article in 4-5 sentences.",
+      "example": "{\"answer\": \"The article describes a novel design strategy to achieve tunable gene control in bacteria using small transcription activating RNA (STAR). Additionally, a novel RNA design strategy is explored that allows to precisely alter regulator concentration using arrays of tandem and transcriptionally fused RNA regulators.\"}",
+      "description": "Based on your skim, describe the general idea/topic of the article. Keep the answer to less than 5 sentences.",
+      "action_params": {
+        "input": "%step001_42"
+      }
+    },
+    {
+      "id": "step034_50",
+      "name": "Research Questions",
+      "action": "extract",
+      "check": null,
+      "format": "list",
+      "prompt": "What research questions (a.k.a. hypotheses) do the authors investigate? Please highlight and list",
+      "example": "{\"answer\": \"The authors investigate the influence of variable X on variable Y under condition Z.\"}",
+      "description": "Based on you skim, please list the research questions the authors try to address. Please also highlight the passage in the paper where the authors state the research question. A research question or hypothesis = a claim (possibly phrased as a question) on the system under investigation which the authors try to verify or falsify; e.g. 'is brain cancer caused by this DNA sequence?'",
+      "action_params": {
+        "input": "%step001_42"
+      }
+    },
+    {
+      "id": "step003_43",
+      "name": "High-level Methods",
+      "check": null,
+      "action": "extract",
+      "prompt": "Summarize the used methods of the article briefly and on a high-level.",
+      "example": "{\"answer\": \"The authors use modular cloning and Gibson assembly to assemble the plasmids needed for their experiments. They perform transformation using either chemically competent or electrocompetent cells. The authors perform and analyse fluorescent measurements...\"}",
+      "description": "Based on your skim, describe the methods used in the aritcle. This includes any actions/technologies involved in the experimental setup.",
+      "action_params": {
+        "input": "%step001_42"
+      }
+    },
+    {
+      "id": "step004_8",
+      "name": "Method Paper Type",
+      "check": null,
+      "action": "extract",
+      "format": "truth",
+      "prompt": "Is this a method paper (as opposed to an original research paper)?",
+      "example": "{\"decision\": \"yes\", \"explanation\": \"The authors introduce a new method for tunable gene control. Hence it is a method paper and the answer is 'yes'.\"}",
+      "description": "Method paper = suggesting a new experimental setup / technology / tool / technique to perform research; e.g. proposing a new experiment for testing for molecule interactions. Original research paper = investigating a research question on natural science phenomena; e.g. checking if two molecules interact with each other.",
+      "action_params": {
+        "input1": "%step001_42"
+      }
+    },
+    {
+      "id": "step048_x",
+      "name": "Overall Clarity of the Paper",
+      "check": null,
+      "action": "extract",
+      "format": "truth",
+      "prompt": "Is this paper written clearly and concisely?",
+      "example": "{\"decision\": \"yes\", \"explanation\": \"Generally, the paper seems well-written and it is easy to follow the main line of argument. However, at first glance several figures seem to be missing proper captions and some tables are too large to understand them easily. Overall, I still arrive at 'yes' as an answer.\"}",
+      "description": "Based on your skim, consider major issues regarding the presentation of the contents in the paper. For instance, there could be a lot of typos, figures and images might be distorted or there might be major language issues. Is the paper overall presented clearly?",
+      "action_params": {
+        "input1": "%step001_42"
+      }
+    },
+    {
+      "id": "step006_4",
+      "name": "Results Section",
+      "action": "read",
+      "check": {
+        "minHighlights": 1
+      },
+      "prompt": "Read the Results section (and associated figures in the appendix) in detail. Highlight the caption of the section to indicate where it starts.",
+      "example": "-",
+      "description": "Read the results section such that you comprehend it fully. Mark important parts using highlights and possibly take notes in the sidebar if this helps you digest. Take as much time as you need.",
+      "action_params": {
+      }
+    },
+    {
+      "id": "step007_7",
+      "name": "Figures",
+      "action": "extract",
+      "format": "list",
+      "multimodal": true,
+      "prompt": "Highlight all figure captions relevant to the result section and summarize the figures briefly without interpreting them. If there are no figures, respond with 'none' as a list item.",
+      "example": "{\"listing\": [\"Figure 2 is a 3D plot of the RNA arrays. It shows all arrays of the first set of experiments and highlights the energy in each part through a distinct color.\"]}",
+      "description": "Check the results section and the appendix for figures/plots/tables that appear relevant to the results description to you. For each figure/plot/table add an item to the list where you name the figure (if a number/name is present), name the figure type (e.g. a 3D plot, a bar chart, ...) and summarize briefly what this figure shows. If multiple figures are very closely related or represent the same data, feel free to summarize them in one entry. If there are no figures, please respond with a single list entry saying 'none'.",
+      "action_params": {
+        "input1": "%step006_4"
+      }
+    },
+    {
+      "id": "step016_25",
+      "name": "Expected Figures for Methods",
+      "action": "infer",
+      "format": "list",
+      "prompt": "What types of plots/figures/tables would you expect for the methods used in the paper?",
+      "example": "{\"listing\": [\"For the repeated measurement of quantity X following method Y I would expect an xy-chart where quantitiy X is plotted over the time of the experiment.\"]}",
+      "description": "Considering the methods used in the paper and your prior experience (or a quick web search) regarding these methods, what kind of plots/figures/tables would you expect for result reporting. For each method, please add one entry to the list that describes the what type of figure (e.g. box plot) and what data (i.e. which measured quanitities) you would expect. Do not yet discuss whether these figures are actually present in the results section.",
+      "action_params": {
+        "input1": "%step003_43"
+      }
+    },
+    {
+      "id": "step019_60",
+      "name": "Choice of Figures",
+      "action": "infer_knowledge",
+      "format": "truth",
+      "prompt": "Are the provided figures the common choice for the given methods?",
+      "example": "{\"decision\":\"no\", \"explanation\": \"As I expected a violin plot for method X to get a better overview on the variance of measurements, I do not consider the chosen figures appropriate. The presented figures are not equivalent and should be replaced.\"}",
+      "description": "Given your expectations on figures for the given methods and the figures provided in the results section, are these figures appropriate for the given methdods? Essentially, you can check whether any of your expectations on figures for the given methods are not met. Please do not (yet) consider if there are figures missing, instead check if there are unusal/unnecessary plots that you would not expect.",
+      "action_params": {
+        "input1": "%step016_25",
+        "input2": "%step007_7"
+      }
+    },
+    {
+      "id": "step017_58",
+      "name": "Missing Figures",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Are there any important figures missing?",
+      "example": "{\"decision\":\"no\", \"explanation\": \"Two important figures are missing in the result reporting. Usually, for method X I would expect graph Y and Z, which I could not find in the paper. These figures are important to get the full image. The other expected figures are present. My answer is therefore 'no'.\"}",
+      "description": "Please compare the figures provided in the result section and the figures you would expect for the used methods. Are any of the expected figures/tables/plot types missing? Please weight your judgement by the importance of the figures for the overall result reporting.",
+      "action_params": {
+        "input1": "%step007_7",
+        "input2": "%step016_25"
+      }
+    },
+    {
+      "id": "step008_6",
+      "name": "Results in Figures",
+      "action": "extract",
+      "format": "list",
+      "multimodal": true,
+      "prompt": "Consider all figures/plots relevant to the results section. Summarize the results implied by the figures; i.e. specific observations on the plotted data.",
+      "example": "{\"listing\": [\"The bar charts in Figure 1 imply a statistically significant increase in fluorescence observed in the presence of STAR that is observed across different species and also when using the SP6 RNAP. [...]. In combination the plots imply that an increased copy number of STAR10 lead to a higher GFP level but an increased copy number of STAR50 lead to higher RFP.\"]}",
+      "description": "Check the results section and the appendix for figures/plots/tables that appear relevant to the results description to you. Write a brief summary what results/findings the plots imply  individually and combined. Avoid blindly restating the authors' observations; instead make your own observations. ",
+      "action_params": {
+        "input1": "%step006_4"
+      }
+    },
+    {
+      "id": "step009_71",
+      "name": "Typical Figure Properties",
+      "action": "infer_knowledge",
+      "format": "list",
+      "prompt": "From your experience, which plot properties (such as standard deviation, value ranges, ...) are common/expected in your research field for the given result plots?",
+      "example": "{\"listing\": [\"For bar-charts showing a standard deviation of multiple experiment runs, I would expect a standard deviation below 20% of the mean to be meaningful. For method X I expect a plot of quantity Y over the time as an xy-chart where the measured Y should only lie between 0 and 0.3.\"]}",
+      "description": "Based on your description of the relevant figures in a prior step, think about what plot properties would be common in your field of research. Consider, for instance, what standard deviation you would expect a plot to have to be meaningful or describe what properties a meaningful 3D plot of a molecule should have. Go through each of the figures you listed in the prior step and summarize your expectations, but do not (yet) discuss whether the figures meet those expectations.",
+      "action_params": {
+        "input": "%step007_7"
+      }
+    },
+    {
+      "id": "step010_72",
+      "name": "Plausibility of Figures",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Considering how you imagine typical plots and the actual plots you observed in the results section, do the plots seem plausible?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The bar charts for repeated measurements of quanitity X exceed the expected threshold notably and show a high standard deviation. This suggests that the experiments might not have been carried out correctly. The other plots do seem plausible. So, overall I would consider the plots as plausible with some minor restrictions.\"}",
+      "description": "For each plot check whether they match your general expectations or whether there are any anomalies. Also, consider whether the plots seem consistent among each other. Consider all plots, please select either true or false based on your judgement whether the inconsistencies are minor or major issues. Provide an explanation and describe the restrictions you apply to your judgement.",
+      "action_params": {
+        "input1": "%step007_7",
+        "input2": "%step009_71"
+      }
+    },
+    {
+      "id": "step011_28",
+      "name": "Results in the Text",
+      "action": "extract",
+      "format": "list",
+      "prompt": "What results/observations do the authors report in the TEXT based on the experimental data and figures? Please highlight and list.",
+      "example": "{\"listing\": [\"From Figure 3, the authors observe, in the presence of STAR, a statistically significant increase of fluorescence. They show this across different species and also when using the SP6 RNA polymerase. Similar to the E. coli RNAP, the SP6 RNAP has an output that is affected by STAR concentration. Using PlmJ only resulted in a small increase in activation when using four STAR copies instead of one.\"]}",
+      "description": "Based on the result section text, consider what results the authors report based on their experimental data and figures. Do not (yet) consider their interpretations and contextualization, instead focus on the plain facts they derive from their measurements. Please highlight and add a list entry for each relevant observation. Specify what experimental data or figure the authors derive their observations from. Try to summarize each point briefly, but take as much space as needed.",
+      "action_params": {
+        "input1": "%step006_4"
+      }
+    },
+    {
+      "id": "step012_41",
+      "name": "Matching Figures and Text",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Considering what the authors report in the text and the results you read from the figures, do they match?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"Overall the figures match the report resulting in the text. However, the authors claim a significant relation between quantities X and Y without providing a plot or verifiable data. Additionally, they claim that Figure 2 shows a peak in quanity Y while introducing chemical Z; this peak does not appear very clear to me. Nevertheless, these are minor inconsistencies and hence my overall judgement is 'yes'.\"}",
+      "description": "Consider the resut reporting you found in the text and the results you read from the figures yourself, do you think that all figures match the reported results or do the authors misrepresent some of the data? Consider all results and figures, please select either true or false based on your judgement whether the inconsistencies are minor or major issues. Provide an explanation and describe the restrictions you apply to your judgement.",
+      "action_params": {
+        "input1": "%step008_6",
+        "input2": "%step011_28"
+      }
+    },
+    {
+      "id": "step013_29",
+      "name": "Summary of Results",
+      "action": "infer",
+      "prompt": "Based on your prior observations regarding the results the authors report, the figures imply and their consistency, please summarize the main results in a short paragraph.",
+      "example": "{\"answer\": \"The authors report measurements on X and Y for experiment Z in Figures 1 and 2 showing a postive marker at time t. They report that the variance of V in experiment W as Q. [...]\"}",
+      "description": "Consider the results you read from the figures and the ones the authors specify, please summarize the main results from the result section briefly. In principle you can simply merge the results you read from the plots with the ones from the authors and summarize them; however, exclude those results reported by the authors do not seem correct to you.",
+      "action_params": {
+        "input1": "%step008_6",
+        "input2": "%step011_28",
+        "input3": "%step012_41"
+      }
+    },
+    {
+      "id": "step014_5",
+      "name": "Figure Tempering",
+      "action": "extract",
+      "format": "truth",
+      "multimodal": true,
+      "prompt": "Do the figures show signs of tempering?",
+      "example": "{\"decision\":\"no\", \"explanation\": \"The figures do not seem to show obvious signs of tempering. However, in Figure 5 the red box highlighting the relevant parts of the molecule obstruct the view of the 3D model. I would heavily recommend removing this box for the sake of scientific clarity.\"}",
+      "description": "Considering the figures, do they show any signs of tempering or unscientific post-processing (intentional or unintentional? For instance, some lines may be interrupted, figures might be over-plotted with annotations or the legend does not add up with the visible plot.",
+      "action_params": {
+        "input1": "%step006_4"
+      }
+    },
+    {
+      "id": "step015_73",
+      "name": "Truthful Figures",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Do the provided figures appear truthful and adhere to best scientific practice?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"Most of the figures appear truthful. I have some doubts about Figure 3 because the results reported in the text are vastly different from what I see in the plot. However, Figure 3 is of minor importance to the result reporting and the inconsistency appear to be an unintentional mistake. Hence the answer is 'true'.\"}",
+      "description": "Please consider the plausibility of figures, the consistency of figures to the text, and whether there are signs of tempering in the figures. Based on this, make an overall judgement whether the figures appear truthful (honest) and scientific. A paper with plausible and consistent figures without tempering would be a definitive yes; if one of the criteria is not fullfilled you should weigh if the problematic figures are of major or minor relevance. Please provide a brief explanation and describe the restrictions that apply to your response.",
+      "action_params": {
+        "input1": "%step010_72",
+        "input2": "%step012_41",
+        "input3": "%step014_5"
+      }
+    },
+    {
+      "id": "step018_59",
+      "name": "Result Reporting Completeness",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Is the result reporting complete (i.e. no important results are ommitted)?",
+      "example": "{\"decision\":\"no\", \"explanation\": \"While the textual reporting seems mostly complete, there are two important figures missing. Hence the answer is 'no'.\"}",
+      "description": "Judging based on the results reported in the text and your assessment regarding missing figures, do you think the result reporting comprises all relevant information? Please weigh the importance of potentially missing reporting and figures. Explain your answer and describe the restrictions that apply.",
+      "action_params": {
+        "input1": "%step011_28",
+        "input2": "%step017_58"
+      }
+    },
+    {
+      "id": "step020_74",
+      "name": "Overall Impression Result Reporting",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Is the result reporting overall adequate for the given methods?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The choice of figures is adequate, the truthfulness of figures is given, but the result reporting is missing several relevant figures. While these figures should definitely be added to the paper, their importance for the overall topic of the paper is minor. Hence, I arrive at 'yes' as an answer.\"}",
+      "description": "Based on your judgement regarding the correct choice of figures, completeness of the result reporting, and the truthfulness of figures, would you judge the result reporting as overall adequate? If all three criteria are fulfilled, this is a definitive yes; otherwise, please weigh and explain on which aspects the result reporting falls short and why these aspects are important.",
+      "action_params": {
+        "input1": "%step019_60",
+        "input2": "%step018_59",
+        "input3": "%step015_73"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step021_12",
+      "name": "Discussion Section",
+      "action": "read",
+      "prompt": "Read the discussion section in detail. Highlight the section caption to indicate where it starts. If there are also interpretations and conclusions in the result section, please consider that too.",
+      "example": "-",
+      "description": "Read the discussion section of the paper in detail. If there is no discussion section, please check the results section for interpretations and discussion by the authors. In that case, you should also rely on the results section to answer the following questions.",
+      "action_params": {
+      }
+    },
+    {
+      "id": "step022_20",
+      "name": "Interpretations",
+      "action": "extract",
+      "format": "list",
+      "prompt": "Which interpretations do the authors provide? Interpretations = explanations for a specific experimental result",
+      "example": "{\"listing\": [\"The authors report that the experiment showed that in the presence of STAR, an increase in fluorescence could be observed across different species. Increasing the STAR copy number resulted in increased activation.\"]}",
+      "description": "Which interpretations do the authors provide on top of the basic result reporting? Interpretations = explanations for a specific experimental result and not general knowledge claims; e.g. 'condition X shows higher variance than Y'. Please highlight in the paper and add a list entry for each. If there are none, please add an item saying 'none'.",
+      "action_params": {
+        "input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step023_19",
+      "name": "Direct conclusions",
+      "action": "extract",
+      "format": "list",
+      "prompt": "Which direct conclusions do the authors draw? Direct conclusions = general knowledge claims based on an experiment",
+      "example": "{\"listing\": [\"The authors concluded that the RNA arrays function across different species. STARs have the potential to provide a broad-host tool for gene activation for Gram-negative species. It is possible to tune the output gain. This tool also works with a bacteriophage RNA polymerase.\"]}",
+      "description": "Which direct conclusions do the authors draw from the interpreted results? Conclusions = general knowledge claims derived from the interpretations of the experiments; e.g. 'property X causes property Y'. Please highlight in the paper and add a list entry for each; if there are none, please add a single entry saying 'none'.",
+      "action_params": {
+        "input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step024_18",
+      "name": "Projective conclusions",
+      "action": "extract",
+      "format": "list",
+      "prompt": "Which projective/speculative conclusions do the authors make? Speculative conclusions = opinions = plausible claims that are not fully backed by the data",
+      "example": "{\"listing\": [\"The authors concluded that the RNA arrays function across different species. STARs have the potential to provide a broad-host tool for gene activation for Gram-negative species. It is possible to tune the output gain. This tool also works with a bacteriophage RNA polymerase.\"]}",
+      "description": "Which projective or speculative conclusions do the authors make? Speculative conclusions = claims that are plausible given the experiments, but not fully scientifically proven and indicated as such by the authors; typically these claims are expressed in opinions; e.g. 'the data suggests that X might cause Y' or 'we believe that ...'. Please highlight in the paper and add a list entry for each. If there are none add 'none' as a list entry.",
+      "action_params": {
+        "input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step025_26",
+      "name": "Method confounders",
+      "action": "infer_knowledge",
+      "prompt": "Which confounding factors for the used methods are known to you?",
+      "example": "{\"answer\": \"The authors measure X using method Y. Generally, for such experiments it is necessary to control for the temperature and the saturation of the underlying solution.",
+      "description": "Considering the methods used in the paper, which general confounding factors do you know that could influence the measurements during the experiment and potentially affect the conclusions drawn from them? Please focus on the most important ones and if necessary do a quick search.\"}",
+      "action_params": {
+        "input1": "%step003_43"
+      }
+    },
+    {
+      "id": "step026_30",
+      "name": "INVALID interpretations",
+      "action": "infer",
+      "format": "list",
+      "prompt": "Which interpretations of the authors are invalid considering potential confounders of the experiments and actual reported results?",
+      "example": "{\"listing\": [\"For experiment X the interpretations match the results reported in the text and figures. However, there during experiment X a typical confounder is Y; the authors do not discuss this aspect in the paper which might imply that some of the interpretations are based on wrong measurements.\"]}",
+      "description": "Please consider the actual results found during experiments and compare them with the authors interpretations. Are they valid? Now consider potential confounders that may lead to measurement errors. Are they plausible and could make the interpretations wrong or only partially correct? Please list the INVALID interpretations here and for each explain why you consider them invalid. Otherwise create a list entry saying 'None'.",
+      "action_params": {
+        "input1": "%step022_20",
+        "input2": "%step025_26",
+        "input3": "%step013_29"
+      }
+    },
+    {
+      "id": "step027_33",
+      "name": "VALID interpretations",
+      "action": "infer",
+      "format": "list",
+      "prompt": "Which interpretations of the authors are justified by the actually reported results?",
+      "example": "{\"listing\": [\"The interpretation of experiment X that says Y match the results reported in the text and figures. No confounders known to me could make this interpretation incomplete, so I consider it as valid.'\"], [\"The authors interpret that 'the statistical relationship between the observed genes is not significant'. By the mentioned confounder on the experiments I am not fully convinced that this interpretation is correct -- however, given the benefit of the doubt I still consider this as valid with contraints.\"]}",
+      "description": "Please consider the actual results found during experiments and compare them with the authors interpretations. Are they fully justified by the results? Now consider potential confounders that may lead to measurement errors. Are they plausible and could make the interpretations wrong or only partially correct? Please list the VALID interpretations here and potentially add an explanation to each of them why you consider them as valid. Otherwise create a single list entry saying 'None'.",
+      "action_params": {
+        "input1": "%step022_20",
+        "input2": "%step025_26",
+        "input3": "%step013_29"
+      }
+    },
+    {
+      "id": "step028_34",
+      "name": "ALTERNATIVE interpretations",
+      "action": "infer_knowledge",
+      "format": "list",
+      "prompt": "Considering the valid interpretations, can you imagine additional or alternative interpretations that are equally justified by the data?",
+      "example": "{\"listing\": [\"Interpretation that the authors system setup works better than those from prior work is not entirely justified from the very limited experiments. I would rather suspect that their system has more compute which does not render the comparison fair.\", \"...\"]}",
+      "description": "Consider the valid interepretations. For each think about whether you could come up with a reasonable alternative interpretation that is relevant to the research question. Possibly, you can also think of interpretations that are missing based on the reported results. Please add a list entry for each such interpretation and explain why it might be more appropriate or missing. If there are none, please add a list entry saying 'None'. ",
+      "action_params": {
+        "input1": "%step027_33",
+        "input2": "%step013_29"
+      }
+    },
+    {
+      "id": "step029_98",
+      "name": "Incompleteness of interpretations",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Considering your alternative and additional interpretations, are they actually missing in the valid interpretations of the authors? Judge the overall completeness of interpretations based on this.",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The authors omit important alternative interpretations; these interpretations change the basis of the discussion a lot and are hence missing.\"}",
+      "description": "Consider the alternative and additional interpretations you provided in an earlier step. Please compare them against the valid interpretations of the authors and weight whether they are not sufficiently covered in the paper and why they would be important. Based on this analysis decide if the interpretations in the paper are incomplete.",
+      "action_params": {
+        "input1": "%step027_33",
+        "input2": "%step028_34"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step030_35",
+      "name": "VALID conclusions",
+      "action": "infer",
+      "format": "list",
+      "prompt": "Considering the authors' direct conclusions, which are valid and derive validly from the correct interpretations? ",
+      "example": "{\"listing\": [\"The conclusion 'variables A and B are causally linked' is correct and fully justified by the interpretations Y. Explanation: the experimental setup is flawless and they compared two random control groups with the interventional group. This suggests does suggest a causal link between variables.\", \"... Explanation: ...\"]}",
+      "description": "Verify the author's direct conclusions against the interpretations you consider as valid (including your additional/alternative interpretations). Are the conclusions consistent with the actual result interpretations or can some of them not be fully justified from the experiments? Please add an entry for each VALID conclusion and give a short explanation why you consider it valid. If there are non please create a single list entry saying 'None'.",
+      "action_params": {
+      	"input1": "%step023_19",
+        "input2": "%step027_33",
+        "input3": "%step028_34"
+      }
+    },
+    {
+      "id": "step031_31",
+      "name": "INVALID conclusions",
+      "action": "infer",
+      "format": "list",
+      "prompt": "Considering the authors' conclusions, which are invalid given the interpretations?",
+      "example": "{\"listing\": [\"The conclusion on X is not fully justified by the interpretations Y. Explanation: More experiments would be required to prove X because I suspect confounding factors to lead to the underlying measurements.\", \"... Explanation: ...\"]}",
+      "description": "Verify the author's direct conclusions against the interpretations you consider as valid (including your additional/alternative interpretations). Are the conclusions inconsistent with the actual result interpretations or can some of them not be fully justified from the experiments? Also, check whether some of the conclusions are derived from invalid interpretations, which would make them invalid, too.  Please add an entry for each INVALID conclusion and give a short explanation why you consider it invalid. If there are none please create a single list entry saying 'None'.",
+      "action_params": {
+      	"input1": "%step023_19",
+        "input2": "%step027_33",
+        "input3": "%step028_34",
+        "input4": "%step026_30"
+      }
+    },
+    {
+      "id": "step033_99",
+      "name": "Completeness of conclusions",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Considering the correct conclusions and the paper's research questions, do the conclusions fully answer the research questions?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The research question on the relation of variable X and Y is sufficiently answered by the given conclusions. The authors could show how X and Y are related under condition Z, which is a direct answer to the research question at hand.\"}",
+      "description": "Given the CORRECT conclusions and the reserach questions (i.e. hypotheses) the authors pose, is the list of conclusions sufficient to answer all research questions? Check whether there are conclusions for each research question and whether these answer each question to the fullest. Please weight the importance of the research questions and the scope of the conclusions for you decision.",
+      "action_params": {
+      	"input1": "%step034_50",
+      	"input2": "%step030_35"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step035_17",
+      "name": "Related work results",
+      "action": "extract",
+      "prompt": "What related work RESULTS do the authors report? Please highlight in the paper and summarize the reporting briefly.",
+      "example": "{\"answer\": \"The authors report the mean time passed for experiment X in table 3. Other than that, there is no related work result reporting.\"}",
+      "description": "Consider the related work results the authors report; this covers all raw data/measurements from related work and not their conclusions on that data. For instance, for the very same experimental setup related work might report on the same metric value or the authors even performed a replication study of related work. Please highlight the passages in the paper, where the authors report on those numbers (for figures and tables, highlight their captions). In addition to the highlights, please summarize high-level what kind of related work results the authors provide (e.g. what kind of measurements etc.).",
+      "action_params": {
+      	"input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step36_14",
+      "name": "Related work results differences",
+      "action": "extract",
+      "prompt": "Do the authors observe and explain differences and commonalities of their results compared to related work? Please highlight and summarize briefly.",
+      "example": "{\"answer\": \"The authors point out that their measurements for experiment X significantly deviate from those of Y et al. They explain this difference by a deviation in the carrier medium.\"}",
+      "description": "Check whether the authors discuss differences or commonalities of their own RESULTS (not conclusions) in comparison to related work. If authors point out differences they might also provide explanations for those. Please highlight the respective text passages and summarize the most important aspects of this discussion.",
+      "action_params": {
+      	"input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step37_102",
+      "name": "Related work results missing",
+      "action": "infer_knowledge",
+      "format": "list",
+      "prompt": "Based on your knowledge of the related work and the related work results the authors report, is there anything missing? In that case, please list the results of related work that are missing.",
+      "example": "{\"listing\": [\"The authors compare their method against the related work methods in Table 5. However, the table is missing an entry for the important method Y introduced by Z et al. 2015.\"]}",
+      "description": "Please think about the related work for this paper and consider whether they performed experiments and provided results relevant to the experiments in this paper (possibly do a quick search). Do you notice that there are some related work results missing in the authors' discussion? Please list each such experimental result which is missing including a pointer to the related work where this result stems from. If there are none please create a single list entry saying 'None'",
+      "action_params": {
+      	"input1": "%step035_17"
+      }
+    },
+    {
+      "id": "step38_103",
+      "name": "Results contextualization",
+      "action": "infer",
+      "prompt": "Are the results appropriately contextualized in the related work? Please also consider the paper type to weight your judgement.",
+      "example": "{\"answer\": \"Overall the authors provide an extensive related work discussion with reasonable explanations for the observed differences to related work results. However, one important comparison to the related results of X et al. (2022) is missing. As this is a method paper, I would expect the comparison to cover this work too. Hence, my answer is 'no'.\"}",
+      "description": "Please consider the provided related work discussion and observed differences, any possibly missing related work results and compare them with the actual results the authors report. Is the provided contextualization with related work sufficient? Please weight your judgement by the paper type (method paper or original research paper). ",
+      "action_params": {
+      	"input1": "%step004_8",
+      	"input2": "%step035_17",
+      	"input3": "%step37_102",
+      	"input4": "%step013_29",
+      	"input5": "%step36_14"
+      }
+    },
+    {
+      "id": "step39_104",
+      "name": "Results plausibility",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Are the experimental results plausible given the results of related work? Please weight your judgement by the paper type.",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The discussed related work results align well with the presented results. Even though one important related result is missing, I believe that results are overall plausible.\"}",
+      "description": "Please assess whether the presented experimental results are plausible given prior results in related work. Current results may contradict prior work, deviate in unexplicable ways, or align perfectly. For this purpose, please consider the reported related work and the related work results that you identified as missing. Weight your judgement considering the type of the paper (method or original research paper).",
+      "action_params": {
+      	"input1": "%step035_17",
+      	"input2": "%step37_102",
+      	"input3": "%step013_29"
+      }
+    },
+    {
+      "id": "step44_105",
+      "name": "Result validity",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Overall, do the RESULTS appear scientifically sound? Consider the adequacy of reporting, plausibility of results, and the related work context.",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The overall result reporting does not seem entirely appropriate, because some of the figures do not appear reliable. However, their most important results for experiment X align perfectly with related work, to which the authors compare extensively. Hence, I would overall judge the results as valid with some reservations regarding the figures.\"}",
+      "description": "Combining your judgement on the adequacy of the result reporting and the plausibility of the results according to related work, would you consider that the experimental results are scientifically sound? For your judgement please also consider if the plausibility according to related work is based on a solid related work contextualization (judged in a previous step). ",
+      "action_params": {
+      	"input1": "%step020_74",
+      	"input2": "%step39_104",
+      	"input3": "%step38_103"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step40_13",
+      "name": "Related conclusions discussion",
+      "action": "extract",
+      "format": "list",
+      "prompt": "Do the authors discuss and explain differences and commonalities to CONCLUSIONS in related work? Please highlight in the paper and summarize the discussion for each aspect briefly.",
+      "example": "{\"listing\": [\"The authors discuss their conclusion on the interaction between variable X and Y in contrast to X et al. (2022). They observe that the prior findings do not hold against the new findings and explain why their experimental setup might be advantagous to verify that claim.\"]}",
+      "description": "Please consider the conclusions (findings; i.e. general knowledge claims, not specific experimental interpretations) that the authors present from related work; usually, the findings from related work are part of a discussion of differences and commonalities. If such a discussion is provided, please highlight it in the paper and summarize each point briefly.",
+      "action_params": {
+      	"input1": "%step021_12"
+      }
+    },
+    {
+      "id": "step42_x",
+      "name": "Related conclusions comparison adequacy",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Is the discussion of the related work CONCLUSIONS appropriate? Consider if there are alternative explanations possible or if there are errors in the argumentation.",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The conclusions from related work align in all important points with the findings of the paper. The overall conclusions of the paper are correctly represented in that discussion.\"}",
+      "description": "Please consider the discussion of the related work conclusions. Does it seem appropriate given the correct conclusions the authors provide? Could there be alternative explanations for differences or commonalities that the authors are missing? Please weight your judgement by the relevance to the overall goal of the paper.",
+      "action_params": {
+      	"input1": "%step40_13",
+      	"input2": "%step030_35"
+      }
+    },
+    {
+      "id": "step41_15",
+      "name": "Related conclusions missing",
+      "action": "infer_knowledge",
+      "format": "list",
+      "prompt": "Based on your knowledge of the related work and the related work CONCLUSIONS the authors discuss, is there anything missing?",
+      "example": "{\"listing\": [\"The authors do not compare their findings against X et al. (2021). This is an important comparison, because seemingly X et al. (2021) perform the very same experiment as this paper, but come to different conclusions.\"]}",
+      "description": "Please consider the discussion of related work conclusions and check if there are related work conclusions missing in the discussion. For this purpose think about the related work relevant to the experiments (or perform a quick search). Please list the related work and their conclusions that are missing and briefly explain why these are important for each. If there are none, please create a list entry saying 'None'.",
+      "action_params": {
+      	"input1": "%step40_13",
+      	"input2": "%step030_35"
+      }
+    },
+    {
+      "id": "step43_96",
+      "name": "Conclusions contextualization adequacy",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Overall, are the conclusions properly contextualized with related work? Take the paper type into account to weight your response.",
+      "example": "{\"decision\":\"no\", \"explanation\": \"There is only a very limited comparison of the paper's findings with the existing literature. Given that the paper, being an original research paper, investigates the impact of X on Y, I would have expected a discussion of earlier findings regarding X and Y.\"}",
+      "description": "Are the conclusions overall correctly contextualized with the related work? Consider whether the comparison seemed adequate and whether no important related work conclusions are missing. Please weight your judgement by the paper type (method or original research paper).",
+      "action_params": {
+      	"input1": "%step41_15",
+      	"input2": "%step42_x",
+      	"input3": "%step004_8"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step45_106",
+      "name": "Conclusion validity",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Overall, do the correct conclusions seem scientifically sound and answer the research questions? Consider if conclusions cover all research questions, the correctness of underlying results, and the authors' projective conclusions.",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The result reporting is absolutely sound and leaves no room for complaints. However, the conclusions that address research question X are all projective and not proven by data. Overall, due to the mismatch between the valid conclusions and the central research question, I don't consider the paper's conclusions as scientifically valid.\"}",
+      "description": "Please judge whether the conclusions of the paper appear scientifically sound answers to the research questions. Weight whether they cover all aspects of the research question, are based on correct results, and consider whether additional projective conclusions (opinions) seem appropriate to you in that context.",
+      "action_params": {
+      	"input1": "%step033_99", 
+      	"input2": "%step44_105",
+      	"input3": "%step024_18"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step46_100",
+      "name": "Conclusion relevance",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Overall, do the conclusions appear relevant (i.e. in-scope of the paper and its scientific field)? Consider if the conclusions answer the research questions and the related work context.",
+      "example": "{\"decision\":\"no\", \"explanation\": \"The authors fail to derive direct conclusions that are specific and relevant with respect to the challenging research questions. If their research question had been better scoped, I would be more inclined to say yes. As it is, I have to answer with no.\"}",
+      "description": "Please judge whether the conclusions are also relevant to the research questions of the paper and its associated scientific field. For each conclusion check if it is relevant to at least one of the research questions and contemplate whether the paper appropriately describes the relevance of the results in comparison to the related work from the same field.",
+      "action_params": {
+      	"input1": "%step033_99",
+      	"input2": "%step43_96"
+      },
+      "judgement": true
+    },
+    {
+      "id": "step47_x",
+      "name": "Overall impression",
+      "action": "infer",
+      "format": "truth",
+      "prompt": "Overall, do you consider the paper a valuable contribution to the scientific community?",
+      "example": "{\"decision\":\"yes\", \"explanation\": \"The main findings of the paper are well-justified by the experiments and provide novel insights into RNA lever design and its limitations. While some of the minor claims lack sufficient evidence the core contribution of the paper possesses merit for the community by enabling important follow-up research. Hence, I overall arrive at yes.\"}",
+      "description": "Considering your judgements on the validity of the main scientific conclusions of the paper and their relevance to the scientific field, would you consider the paper a valuable contribution to the scientific community? A paper can be valid and relevant in varying degress, so please weight your judgement by the importance of these different aspects.",
+      "action_params": {
+      	"input1": "%step45_106",
+      	"input2": "%step46_100"
+      },
+      "judgement": true
+    },
+    {
+      "id": "FINISHED",
+      "name": "Thanks",
+      "check": null,
+      "action": "read",
+      "prompt": "Thanks for participating. Hit Finish Study to end this workflow session.",
+      "example": "test example",
+      "description": "",
+      "action_params": {}
+    }
+  ],
+  "checks": {},
+  "config": {},
+  "actions": {
+    "read": {},
+    "infer": {},
+    "extract": {}
+  }
+}
+
+
+

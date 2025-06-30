@@ -1,0 +1,46 @@
+{
+  "paper_x": [
+    {
+      "id": "step001_42",
+      "name": "Skim",
+      "action": "read",
+      "prompt": "Skim the whole paper briefly (10-15min).",
+      "example": "-",
+      "description": "Get the gist of the paper in a 10-15min read. No need to understand all details, but get a rough idea what the paper is about.",
+      "paper_id": "paper_x",
+      "global_id": "paper_x.step001_42",
+      "answers": {
+        "4": {
+          "output": {
+            "spans": [
+              "paper_40.xml_0"
+            ],
+            "answer": null,
+            "text": null
+          },
+          "input": null
+        },
+        "6": {
+          "output": {
+            "spans": [
+              "paper_40.xml_0"
+            ],
+            "answer": null,
+            "text": null
+          },
+          "input": null
+        },
+        "54": {
+          "output": {
+            "spans": [
+              "paper_40.xml_0"
+            ],
+            "answer": null,
+            "text": null
+          },
+          "input": null
+        }
+      }
+    }
+  ]
+}
